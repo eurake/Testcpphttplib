@@ -41,5 +41,5 @@ int main(void) {
     res.set_content(jRes.dump(), "application/json");
   });
 
-  svr.listen("127.0.0.1", 12345);
+  svr.listen("localhost", 12346);
 }
