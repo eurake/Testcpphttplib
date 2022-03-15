@@ -3786,19 +3786,19 @@ public:
 
           static const std::string header_name = "content-type:";
           const auto header = buf_head(pos);
-          //BOOST_LOG_TRIVIAL(fatal)<< "cpp http lib header " << header;
+          std::cout << "cpp http lib header " << header << std::endl;
           if (start_with_case_ignore(header, header_name)) {
-            //BOOST_LOG_TRIVIAL(fatal)<< "cpp http lib enter if start_with_case_ignore() used trim_copy header " << header;
-            //BOOST_LOG_TRIVIAL(fatal)<< "cpp http lib enter if start_with_case_ignore() used trim_copy header_name " << header;
+            std::cout << "cpp http lib enter if start_with_case_ignore() used trim_copy header " << header<< std::endl;
+            std::cout << "cpp http lib enter if start_with_case_ignore() used trim_copy header_name " << header<< std::endl;
             file_.content_type = trim_copy(header.substr(header_name.size()));
-            //BOOST_LOG_TRIVIAL(fatal)<< "content_type " <<  file_.content_type;
+            std::cout << "content_type " <<  file_.content_type;
           } else {
             std::smatch m;
-            //BOOST_LOG_TRIVIAL(fatal)<< "cpp http lib " << header;
+            std::cout << "cpp http lib " << header;
             if (std::regex_match(header, m, re_content_disposition)) {
-              //BOOST_LOG_TRIVIAL(fatal)<< "cpp http lib m0 " << m[0];
-              //BOOST_LOG_TRIVIAL(fatal)<< "cpp http lib m1 " << m[1];
-              //BOOST_LOG_TRIVIAL(fatal)<< "cpp http lib m2 " << m[2];
+              std::cout << "cpp http lib m0 " << m[0]<< std::endl;
+              std::cout << "cpp http lib m1 " << m[1]<< std::endl;
+              std::cout << "cpp http lib m2 " << m[2]<< std::endl;
               file_.name = m[1];
               file_.filename = m[2];
             }
