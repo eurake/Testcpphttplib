@@ -10,3 +10,7 @@
 ### Test in Python 
 ### Test in curl 
 ### Test in Postman you need download Postman 
+
+### add  The official sample server2, Can get the correct picture data. throw web push data ,  but file name is garbled need to change std::wstring
+
+### add golang http server use postman request, Can get the correct picture data. and file name 
