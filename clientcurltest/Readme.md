@@ -1,0 +1,1 @@
+curl --location --request POST 'http://127.0.0.1:12345/api/v1/uploadFile' --form 'imgFile=@"./长城.jpg"'
