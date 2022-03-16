@@ -1,9 +1,10 @@
 
+#include <httplib.h>
+
+#include <fstream>
+#include <iostream>
 #include <json.hpp>
 #include <string>
-#include <fstream>
-#include <httplib.h>
-#include <iostream>
 using namespace httplib;
 using namespace std;
 
@@ -53,5 +54,36 @@ int main(void) {
     res.set_content("done", "text/plain");
   });
 
+  svr.Post("/downloadExcel", [](const Request &req, Response &res){
+    // Step 1 Processing request parameters and  create excel file  and save
+    // std::string  req.get_param_value("name");
+    // std::string req.get_param_value("startDate");
+    // std::string req.get_param_value("endDate");
+
+    // Step2 Open read to data buffer
+    std::filebuf *pbuf;
+    std::ifstream filestr;
+    long size;
+    char *data;
+    filestr.open("./test2.xlsx", std::ios::binary);
+    pbuf = filestr.rdbuf();
+    size = pbuf->pubseekoff(0, std::ios::end, std::ios::in);
+    pbuf->pubseekpos(0, std::ios::in);
+    data = new char[size];
+    pbuf->sgetn(data, size);
+    filestr.close();
+    std::cout.write(data, size);
+
+    res.set_content_provider(
+        size, "application/xslt+xml",
+        [data](size_t offset, size_t length, DataSink &sink) {
+          size_t DATA_CHUNK_SIZE = 1024;
+          const auto d = data;
+          auto out_len = std::min(static_cast<size_t>(length), DATA_CHUNK_SIZE);
+          auto ret = sink.write(&d[offset], out_len);
+          return true;
+        },
+        [data](bool success) { delete data; });
+  }
   svr.listen("127.0.0.1", 12346);
 }
